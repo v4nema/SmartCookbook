@@ -1,6 +1,7 @@
 package com.example.sebastianszczepaniak.cookbookspeak;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +15,11 @@ import android.widget.TextView;
 
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
+
+import com.allrecipes.Recipe;
+import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
+import com.reply.smartcookbook.Callback;
+import com.reply.smartcookbook.RecipeSearchTask;
 
 /**
  * Created by Tak on 24/04/2016.
@@ -49,10 +55,26 @@ public class StandardActivity extends Activity implements OnClickListener
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en-US");
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        //recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
 
         findViewById(R.id.actionButton).setOnClickListener(this);
+
+        findViewById(R.id.spokenSearchButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                RecipeSearchTask task = new RecipeSearchTask(new Callback<List<Recipe>>() {
+                    @Override
+                    public void callback(List<Recipe> value)
+                    {
+                        ApplicationState.getInstance().setRecipes(value);
+                        Intent intent = new Intent(StandardActivity.this, RecipiesActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                task.execute(mText.getText().toString().split(" "));
+            }
+        });
     }
 
     @Override
@@ -172,7 +194,7 @@ public class StandardActivity extends Activity implements OnClickListener
                 for (int i = 0; i < 1; /*thingsYouSaid.size();*/ i++)
                     outValue += thingsYouSaid.get(i); // + "\n";
 
-                mText.setText(outValue);
+                mText.setText(mText.getText().toString()+outValue+" ");
             }
 
             mIsWorking = false;

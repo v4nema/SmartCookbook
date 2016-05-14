@@ -6,8 +6,9 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:weightSum="1">
 
         <TextView
             android:layout_width="match_parent"
@@ -24,9 +25,22 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="57dp"
+            android:layout_height="wrap_content"
             android:text="..."
             android:id="@+id/outpuText"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/spokenSearchButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:onClick="setContentView"
+            android:layout_marginTop="20dp"
+            android:text="search"
             android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
