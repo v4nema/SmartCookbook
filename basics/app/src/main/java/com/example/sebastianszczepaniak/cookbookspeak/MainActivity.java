@@ -68,6 +68,14 @@ public class MainActivity extends Activity {
                 ApplicationState.getInstance().setServerAddress(address);
             }
         });
+
+        findViewById(R.id.tellMeButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, StandardActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }
