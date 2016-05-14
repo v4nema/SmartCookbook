@@ -11,12 +11,24 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/app_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15sp"
+        android:background="#2196F3"
+        android:padding="5dp"
+        android:text="Recipes List"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Here&apos;s what you can cook..."
         android:id="@+id/title"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal" />
 
     <ListView
         android:layout_width="match_parent"

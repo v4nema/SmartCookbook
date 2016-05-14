@@ -60,7 +60,37 @@
             android:padding="10sp"
             android:id="@+id/recipe_steps_container">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:padding="5sp"
+                android:text="1. Cook the macaroni in a large saucepan of boiling salted water for 8-10 minutes; drain well and set aside."
+                android:background="#7fbf7f"/>
+
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Play"
+                android:id="@+id/play_button"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:id="@+id/next_button"
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

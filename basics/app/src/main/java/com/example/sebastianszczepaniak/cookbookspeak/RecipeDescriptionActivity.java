@@ -16,6 +16,8 @@ import com.allrecipes.Ingredient;
 import com.allrecipes.Recipe;
 import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -24,6 +26,7 @@ public class RecipeDescriptionActivity extends Activity implements TextToSpeech.
 
     private static final int MY_DATA_CHECK_CODE = 0;
     private TextToSpeech tts;
+    private int currentStep = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +56,54 @@ public class RecipeDescriptionActivity extends Activity implements TextToSpeech.
         methodStepsContainer.removeAllViews();
 
         final List<TextView> stepTextViews = new ArrayList<>();
-        for (String step : selectedRecipe.getSteps()) {
+        for (int i=0; i<selectedRecipe.getSteps().size(); i++) {
             final TextView stepTextView = new TextView(getApplicationContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            int margin_bottom_5 = (int) getResources().getDimension(R.dimen.margin_bottom_5);
-            params.setMargins(0, 0, 0, margin_bottom_5);
+            int dp_5 = (int) getResources().getDimension(R.dimen.margin_bottom_5);
+            params.setMargins(0, 0, 0, dp_5);
             stepTextView.setLayoutParams(params);
-            stepTextView.setText(step);
+            stepTextView.setPadding(dp_5,dp_5,dp_5,dp_5);
+            String stepText = (i+1)+". "+selectedRecipe.getSteps().get(i);
+            stepTextView.setText(stepText);
             stepTextView.setTextColor(Color.parseColor("#000000"));
             methodStepsContainer.addView(stepTextView);
             stepTextViews.add(stepTextView);
         }
+
+        final Button playButton = (Button) findViewById(R.id.play_button);
+        final Button nextButton = (Button) findViewById(R.id.next_button);
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final TextView firstStepView = stepTextViews.get(currentStep);
+                firstStepView.setBackgroundColor(Color.parseColor("#7fbf7f"));
+                speak(firstStepView.getText().toString(), TextToSpeech.QUEUE_FLUSH);
+                playButton.setEnabled(Boolean.FALSE);
+                playButton.setVisibility(View.INVISIBLE);
+                nextButton.setVisibility(View.VISIBLE);
+                nextButton.setEnabled(Boolean.TRUE);
+                currentStep++;
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final TextView previousStepView = stepTextViews.get(currentStep-1);
+                previousStepView.setBackground(null);
+                final TextView currentStepView = stepTextViews.get(currentStep);
+                currentStepView.setBackgroundColor(Color.parseColor("#7fbf7f"));
+                speak(currentStepView.getText().toString(), TextToSpeech.QUEUE_FLUSH);
+                currentStep++;
+                if(currentStep == stepTextViews.size()){
+                    nextButton.setEnabled(Boolean.FALSE);
+                    nextButton.setText("FINISHED");
+                    speak("Congratulations, you have finished cooking your dish. Enjoy your food!", TextToSpeech.QUEUE_ADD);
+                }
+            }
+        });
+
     }
 
     private String prepareIngredientsString(List<Ingredient> ingredients) {
@@ -87,8 +127,8 @@ public class RecipeDescriptionActivity extends Activity implements TextToSpeech.
         super.onDestroy();
     }
 
-    private void speak(String words) {
-        tts.speak(words, TextToSpeech.QUEUE_FLUSH, null, null);
+    private void speak(String words, int action) {
+        tts.speak(words, action, null, null);
     }
 
     @Override
