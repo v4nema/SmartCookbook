@@ -43,7 +43,6 @@
             android:layout_marginBottom="20sp"
             android:background="@drawable/dashed_border"
             android:padding="10dp"
-            android:text="250g maccaroni\n40g butter\n40g flour\n600ml milk\n250g grated cheese"
             android:textStyle="italic" />
 
         <TextView
@@ -61,47 +60,7 @@
             android:padding="10sp"
             android:id="@+id/recipe_steps_container">
 
-            <TextView
-                android:id="@+id/recipe_step1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="1. Cook the macaroni in a large saucepan of boiling salted water for 8-10 minutes; drain well and set aside."
-                android:layout_marginBottom="5sp"/>
-
-            <TextView
-                android:id="@+id/recipe_step2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="2. Melt the butter over a medium heat in a saucepan slightly larger than that used for the macaroni. Add the flour and stir to form a roux, cooking for a few minutes."
-                android:layout_marginBottom="5sp" />
-
-            <TextView
-                android:id="@+id/recipe_step3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="3. Gradually whisk in the milk, a little at a time. Cook for 10-15 minutes to a thickened and smooth sauce."
-                android:layout_marginBottom="5sp" />
-
         </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/intro"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:text="Enter some text:" />
-
-        <EditText
-            android:id="@+id/enter"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/speak"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Speak" />
 
     </LinearLayout>
 

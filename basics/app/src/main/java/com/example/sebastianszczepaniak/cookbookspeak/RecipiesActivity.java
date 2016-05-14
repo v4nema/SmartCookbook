@@ -22,7 +22,6 @@ public class RecipiesActivity extends Activity {
         setContentView(R.layout.activity_recipies);
 
         final ListView recipesList = (ListView) findViewById(R.id.recipesList);
-        recipesList.setAdapter(new RecipeItemAdapter(this, ApplicationState.getRecipes()));
-
+        recipesList.setAdapter(new RecipeItemAdapter(this, ApplicationState.getInstance().getRecipes()));
     }
 }

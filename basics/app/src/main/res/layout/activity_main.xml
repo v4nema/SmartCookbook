@@ -16,6 +16,26 @@
         android:orientation="vertical"
         android:weightSum="1">
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/serverAddressText"
+                android:layout_weight="1" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="53dp"
+                android:layout_height="wrap_content"
+                android:text="set"
+                android:id="@+id/serverAddressButton" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/titleLabel"
             android:layout_width="wrap_content"

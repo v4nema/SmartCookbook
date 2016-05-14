@@ -3,6 +3,7 @@ package com.reply.smartcookbook;
 import android.os.AsyncTask;
 
 import com.allrecipes.Recipe;
+import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -14,12 +15,13 @@ public abstract class RestTask<T>  extends AsyncTask<String, Void, T> {
     private Callback<T> callback;
 
     public RestTask(Callback<T> callback) {
-        this.callback = callback;
+        this(ApplicationState.getInstance().getServerAddress(), callback);
     }
 
     public RestTask(String domain,Callback<T> callback) {
-        this(callback);
+
         this.domain = domain;
+        this.callback = callback;
     }
 
     protected static String convertStreamToString(InputStream is)

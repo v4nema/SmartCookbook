@@ -11,6 +11,11 @@ import android.widget.TextView;
 import com.allrecipes.Recipe;
 import com.example.sebastianszczepaniak.cookbookspeak.R;
 import com.example.sebastianszczepaniak.cookbookspeak.RecipeDescriptionActivity;
+import com.example.sebastianszczepaniak.cookbookspeak.RecipiesActivity;
+import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
+import com.reply.smartcookbook.Callback;
+import com.reply.smartcookbook.RecipeDetailsTask;
+import com.reply.smartcookbook.RecipeSearchTask;
 
 import java.util.List;
 
@@ -52,18 +57,25 @@ public class RecipeItemAdapter extends BaseAdapter {
         recipeItemSingle = inflater.inflate(R.layout.recipe_list_item, null);
 
         TextView recipeTitle = (TextView) recipeItemSingle.findViewById(R.id.recipe_item_title);
-        final Recipe currectRecipe = recipeList.get(position);
+        final Recipe currentRecipe = recipeList.get(position);
 
-        recipeTitle.setText(currectRecipe.getName());
+        recipeTitle.setText(currentRecipe.getName());
 
         recipeItemSingle.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(context.getApplicationContext(), RecipeDescriptionActivity.class);
-                i.putExtra(SELECTED_RECIPE, currectRecipe);
-                context.startActivity(i);
+                RecipeDetailsTask task = new RecipeDetailsTask(new Callback<Recipe>() {
+                    @Override
+                    public void callback(Recipe value)
+                    {
+                        ApplicationState.getInstance().setSelectedRecipe(value);
+                        Intent i = new Intent(context.getApplicationContext(), RecipeDescriptionActivity.class);
+                        context.startActivity(i);
+                    }
+                });
+                task.execute(currentRecipe.getUrl());
             }
         });
 

@@ -2,21 +2,27 @@ package com.example.sebastianszczepaniak.cookbookspeak;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.speech.tts.TextToSpeech;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.allrecipes.Ingredient;
 import com.allrecipes.Recipe;
+import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class RecipeDescriptionActivity extends Activity implements TextToSpeech.OnInitListener {
 
     private static final int MY_DATA_CHECK_CODE = 0;
-    private static final String SELECTED_RECIPE = "selected_recipe";
     private TextToSpeech tts;
 
     @Override
@@ -24,17 +30,7 @@ public class RecipeDescriptionActivity extends Activity implements TextToSpeech.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_description);
 
-        Button speakButton = (Button) findViewById(R.id.speak);
-        speakButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText enteredText = (EditText) findViewById(R.id.enter);
-                String words = enteredText.getText().toString();
-                speak(words);
-            }
-        });
-
-        final Recipe selectedRecipe = (Recipe) getIntent().getExtras().get(SELECTED_RECIPE);
+        final Recipe selectedRecipe = ApplicationState.getInstance().getSelectedRecipe();
 
         prepareViewForRecipe(selectedRecipe);
         //todo create a button to play/next method
@@ -46,13 +42,39 @@ public class RecipeDescriptionActivity extends Activity implements TextToSpeech.
     }
 
     private void prepareViewForRecipe(Recipe selectedRecipe) {
-        //todo replace title with recipe title
+        final TextView titleTextView = (TextView) findViewById(R.id.recipe_title);
+        titleTextView.setText(selectedRecipe.getName());
 
-        //todo replace ingredients with ingredients list
+        final TextView ingredientsContainer = (TextView) findViewById(R.id.recipe_ingredientsBox);
+        final String ingredientsString = prepareIngredientsString(selectedRecipe.getIngredients());
+        ingredientsContainer.setText(ingredientsString);
 
-        //todo create a list of steps for recipe and build a list of text views
-        //todo put the list of steps into recipe_steps_container
+        final LinearLayout methodStepsContainer = (LinearLayout) findViewById(R.id.recipe_steps_container);
+        methodStepsContainer.removeAllViews();
 
+        final List<TextView> stepTextViews = new ArrayList<>();
+        for (String step : selectedRecipe.getSteps()) {
+            final TextView stepTextView = new TextView(getApplicationContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            int margin_bottom_5 = (int) getResources().getDimension(R.dimen.margin_bottom_5);
+            params.setMargins(0, 0, 0, margin_bottom_5);
+            stepTextView.setLayoutParams(params);
+            stepTextView.setText(step);
+            stepTextView.setTextColor(Color.parseColor("#000000"));
+            methodStepsContainer.addView(stepTextView);
+            stepTextViews.add(stepTextView);
+        }
+    }
+
+    private String prepareIngredientsString(List<Ingredient> ingredients) {
+        String result = "";
+        for (int i = 0; i < ingredients.size(); i++) {
+            result += ingredients.get(i).getDescription();
+            if (i < ingredients.size() - 1) {
+                result+="\n";
+            }
+        }
+        return result;
     }
 
     @Override
