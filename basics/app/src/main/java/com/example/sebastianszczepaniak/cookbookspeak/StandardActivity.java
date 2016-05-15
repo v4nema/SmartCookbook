@@ -193,7 +193,8 @@ public class StandardActivity extends Activity implements OnClickListener
             {
                 Log.d(TAG, " thingsYouSaid.size=" +  thingsYouSaid.size());
 
-                String[] ingredients = {"next", "chicken", "tomato", "bacon", "pasta", "cheese", "milk", "eggs", "sausage", "meat", "fish", "potatoes", "steak", "yogurt", "carrots"};
+                String[] ingredients = {"next", "chicken", "tomato", "bacon", "pasta", "cheese", "milk", "eggs", "sausage", "meat", "fish", "potatoes", "steak", "yogurt", "carrots",
+                        "pollo", "pomodori", "pancetta", "formaggio", "latte", "uova", "salsa", "carne", "pesce", "patate", "bistecca", "carote" };
                 String outValue = "";
 
                 for (int i = 0; i < 1; /*thingsYouSaid.size();*/ i++)
