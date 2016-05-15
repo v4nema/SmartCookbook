@@ -57,12 +57,16 @@ public class StandardActivity extends Activity implements OnClickListener
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
 
-        findViewById(R.id.actionButton).setOnClickListener(this);
+        final View speakButton = findViewById(R.id.actionButton);
+        speakButton.setOnClickListener(this);
 
         findViewById(R.id.spokenSearchButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                if(mIsListening){
+                    StandardActivity.this.onClick(speakButton);
+                }
                 RecipeSearchTask task = new RecipeSearchTask(new Callback<List<Recipe>>() {
                     @Override
                     public void callback(List<Recipe> value)
@@ -75,6 +79,8 @@ public class StandardActivity extends Activity implements OnClickListener
                 task.execute(mText.getText().toString().split(" "));
             }
         });
+
+        StandardActivity.this.onClick(speakButton);
     }
 
     @Override
