@@ -187,16 +187,25 @@ public class StandardActivity extends Activity implements OnClickListener
         {
             Log.d(TAG, "onResults");
 
-            ArrayList thingsYouSaid = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            ArrayList<String> thingsYouSaid = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
             if( thingsYouSaid.size() > 0)
             {
                 Log.d(TAG, " thingsYouSaid.size=" +  thingsYouSaid.size());
 
+                String[] ingredients = {"next", "chicken", "tomato", "bacon", "pasta", "cheese", "milk", "eggs", "sausage", "meat", "fish", "potatoes", "steak", "yogurt", "carrots"};
                 String outValue = "";
 
                 for (int i = 0; i < 1; /*thingsYouSaid.size();*/ i++)
-                    outValue += thingsYouSaid.get(i); // + "\n";
+                {
+                    String wordsToProcess = thingsYouSaid.get(i);
+
+                    for(String s: ingredients)
+                    {
+                        if( wordsToProcess.contains(s) )
+                            outValue +=  s + "\n";
+                    }
+                }
 
                 mText.setText(mText.getText().toString()+outValue+" ");
             }
