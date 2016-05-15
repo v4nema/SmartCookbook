@@ -287,6 +287,26 @@ public class RecipeDescriptionActivity extends Activity implements TextToSpeech.
                 if (outValue.length() < 10 && outValue.contains("next")) {
                     final TextView previousStepView = stepTextViews.get(currentStep - 1);
                     previousStepView.setBackground(null);
+                    if (currentStep == stepTextViews.size()) {
+                        nextButton.setEnabled(Boolean.FALSE);
+                        nextButton.setText("FINISHED");
+                        nextButton.setBackgroundColor(Color.parseColor("#7fbf7f"));
+
+                        mIsListening = false;
+                        sr.stopListening();
+
+                        speak("Congratulations, you have finished cooking your dish. Enjoy your food!", TextToSpeech.QUEUE_ADD);
+                    } else {
+                        final TextView currentStepView = stepTextViews.get(currentStep);
+                        currentStepView.setBackgroundColor(Color.parseColor("#7fbf7f"));
+                        speak(currentStepView.getText().toString(), TextToSpeech.QUEUE_FLUSH);
+                        currentStep++;
+                    }
+                }
+                /*
+                if (outValue.length() < 10 && outValue.contains("next")) {
+                    final TextView previousStepView = stepTextViews.get(currentStep - 1);
+                    previousStepView.setBackground(null);
                     final TextView currentStepView = stepTextViews.get(currentStep);
                     currentStepView.setBackgroundColor(Color.parseColor("#7fbf7f"));
                     speak(currentStepView.getText().toString(), TextToSpeech.QUEUE_FLUSH);
@@ -301,6 +321,7 @@ public class RecipeDescriptionActivity extends Activity implements TextToSpeech.
                         speak("Congratulations, you have finished cooking your dish. Enjoy your food!", TextToSpeech.QUEUE_ADD);
                     }
                 }
+                 */
             }
 
             mIsWorking = false;
