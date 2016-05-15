@@ -40,7 +40,8 @@ public class RecipeSearchTask extends RestTask<List<Recipe>> {
         {
             ArrayList<NameValuePair> valpairs = new ArrayList<>();
             for (String ing : params) {
-                valpairs.add(new BasicNameValuePair("ingredient",ing));
+                if (!ing.isEmpty())
+                    valpairs.add(new BasicNameValuePair("ingredient",ing));
             }
             request.setEntity(new UrlEncodedFormEntity(valpairs));
             HttpClient client = new DefaultHttpClient();

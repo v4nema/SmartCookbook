@@ -52,7 +52,7 @@ public class StandardActivity extends Activity implements OnClickListener
         sr.setRecognitionListener(new listener());
 
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en-US");
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en-GB");
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
@@ -79,8 +79,6 @@ public class StandardActivity extends Activity implements OnClickListener
                 task.execute(mText.getText().toString().split(" "));
             }
         });
-
-        StandardActivity.this.onClick(speakButton);
     }
 
     @Override
