@@ -193,7 +193,7 @@ public class StandardActivity extends Activity implements OnClickListener
             {
                 Log.d(TAG, " thingsYouSaid.size=" +  thingsYouSaid.size());
 
-                String[] ingredients = {"next", "chicken", "tomato", "bacon", "pasta", "cheese", "milk", "eggs", "sausage", "meat", "fish", "potatoes", "steak", "yogurt", "carrots",
+                String[] ingredients = {"chicken", "tomato", "bacon", "pasta", "cheese", "milk", "eggs", "sausage", "meat", "fish", "potatoes", "steak", "yogurt", "carrots",
                         "pollo", "pomodori", "pancetta", "formaggio", "latte", "uova", "salsa", "carne", "pesce", "patate", "bistecca", "carote" };
                 String outValue = "";
 
@@ -204,11 +204,11 @@ public class StandardActivity extends Activity implements OnClickListener
                     for(String s: ingredients)
                     {
                         if( wordsToProcess.contains(s) )
-                            outValue +=  s + "\n";
+                            outValue +=  s + " ";
                     }
                 }
 
-                mText.setText(mText.getText().toString()+outValue+" ");
+                mText.setText(mText.getText().toString()+outValue);
             }
 
             mIsWorking = false;
