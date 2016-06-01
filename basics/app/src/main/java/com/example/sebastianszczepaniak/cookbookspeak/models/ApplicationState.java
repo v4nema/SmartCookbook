@@ -15,7 +15,8 @@ public class ApplicationState {
     private List<String> ingredients;
     private List<Recipe> recipes;
     private Recipe selectedRecipe;
-    private String serverAddress = "http://172.30.3.185:8080";
+    private String serverAddress = "https://smart-cookbook.herokuapp.com";
+    private String lang = "";
 
     private static ApplicationState ourInstance = new ApplicationState();
 
@@ -33,6 +34,14 @@ public class ApplicationState {
 
     public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
+    }
+
+    public String getLanguage() {
+        return lang;
+    }
+
+    public void setLanguage(String lang) {
+        this.lang = lang;
     }
 
     private void checkThePantry() {

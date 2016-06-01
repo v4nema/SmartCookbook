@@ -1,7 +1,9 @@
 package com.example.sebastianszczepaniak.cookbookspeak;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,6 +21,7 @@ import android.speech.SpeechRecognizer;
 import com.allrecipes.Recipe;
 import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
 import com.reply.smartcookbook.Callback;
+import com.reply.smartcookbook.IngredientListTask;
 import com.reply.smartcookbook.RecipeSearchTask;
 
 /**
@@ -38,6 +41,8 @@ public class StandardActivity extends Activity implements OnClickListener
     private boolean mIsListening = false;
     private boolean mIsWorking = false;
 
+    private Collection<String> ingredients = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -48,11 +53,21 @@ public class StandardActivity extends Activity implements OnClickListener
         mText = (TextView) findViewById(R.id.outpuText);
         mStatusText = (TextView) findViewById(R.id.statusText);
 
+        new IngredientListTask(new Callback<Set<String>>() {
+            @Override
+            public void callback(Set<String> value) {
+                ingredients = new ArrayList<>(value.size());
+                for (String ingr : value) {
+                    ingredients.add(" "+ingr);
+                }
+            }
+        }).execute();
+
         sr = SpeechRecognizer.createSpeechRecognizer(this);
         sr.setRecognitionListener(new listener());
 
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en-GB");
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en");
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
@@ -193,18 +208,23 @@ public class StandardActivity extends Activity implements OnClickListener
             {
                 Log.d(TAG, " thingsYouSaid.size=" +  thingsYouSaid.size());
 
-                String[] ingredients = {"chicken", "tomato", "bacon", "pasta", "cheese", "milk", "eggs", "sausage", "meat", "fish", "potatoes", "steak", "yogurt", "carrots",
-                        "pollo", "pomodori", "pancetta", "formaggio", "latte", "uova", "salsa", "carne", "pesce", "patate", "bistecca", "carote" };
                 String outValue = "";
 
-                for (int i = 0; i < 1; /*thingsYouSaid.size();*/ i++)
+                for (int i = 0; outValue.isEmpty() && i < thingsYouSaid.size(); i++)
                 {
-                    String wordsToProcess = thingsYouSaid.get(i);
+                    String wordsToProcess = " "+thingsYouSaid.get(i);
 
-                    for(String s: ingredients)
-                    {
-                        if( wordsToProcess.contains(s) )
-                            outValue +=  s + " ";
+                    if (ingredients == null)
+                        outValue = wordsToProcess;
+                    else {
+                        for (String s : ingredients) {
+                            int idx = wordsToProcess.indexOf(s);
+                            if (idx > 0) {
+                                int end = wordsToProcess.indexOf(' ',idx+1);
+                                if (end < 0) end = wordsToProcess.length();
+                                outValue += wordsToProcess.substring(idx+1, end) + " ";
+                            }
+                        }
                     }
                 }
 

@@ -14,11 +14,23 @@ public abstract class RestTask<T>  extends AsyncTask<String, Void, T> {
     private Callback<T> callback;
 
     public RestTask(Callback<T> callback) {
-        this.callback = callback;
+        if (callback != null)
+            this.callback = callback;
+        else {
+            this.callback = new Callback<T>() {
+                @Override
+                public void callback(T value) {}
+            };
+        }
     }
 
     protected String getDomain() {
         return ApplicationState.getInstance().getServerAddress();
+    }
+
+    protected String getLangDomain() {
+        ApplicationState state = ApplicationState.getInstance();
+        return state.getServerAddress()+"/"+state.getLanguage();
     }
 
     protected static String convertStreamToString(InputStream is)

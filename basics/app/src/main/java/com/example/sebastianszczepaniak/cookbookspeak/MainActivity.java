@@ -11,8 +11,10 @@ import android.widget.Toast;
 
 import com.allrecipes.Recipe;
 import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
+import com.reply.smartcookbook.AvailableLanguagesTask;
 import com.reply.smartcookbook.Callback;
 import com.reply.smartcookbook.RecipeSearchTask;
+import com.reply.smartcookbook.ServerCheckTask;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,6 +25,14 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        new ServerCheckTask(new Callback<Void>() {
+            @Override
+            public void callback(Void value) {
+                if (ApplicationState.getInstance().getLanguage().isEmpty())
+                    new AvailableLanguagesTask(null).execute();
+            }
+        }).execute();
 
         final EditText ingredientsBox = (EditText) findViewById(R.id.ingredientsBox);
         ingredientsBox.setText("");

@@ -31,7 +31,7 @@ public class RecipeSearchTask extends RestTask<List<Recipe>> {
 
     @Override
     protected List<Recipe> doInBackground(String... params) {
-        HttpPost request = new HttpPost(getDomain()+"/SmartCookBook/rest/ws/service1/");
+        HttpPost request = new HttpPost(getLangDomain()+"/search");
         try
         {
             ArrayList<NameValuePair> valpairs = new ArrayList<>();
