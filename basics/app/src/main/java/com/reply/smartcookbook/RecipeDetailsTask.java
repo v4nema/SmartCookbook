@@ -23,13 +23,9 @@ public class RecipeDetailsTask extends RestTask<Recipe> {
         super(callback);
     }
 
-    public RecipeDetailsTask(String domain, Callback<Recipe> callback) {
-        super(domain,callback);
-    }
-
     @Override
     protected Recipe doInBackground(String... params) {
-        HttpPost request = new HttpPost(domain+"/SmartCookBook/rest/ws/service2/");
+        HttpPost request = new HttpPost(getDomain()+"/SmartCookBook/rest/ws/service2/");
         try
         {
             ArrayList<NameValuePair> valpairs = new ArrayList<>();

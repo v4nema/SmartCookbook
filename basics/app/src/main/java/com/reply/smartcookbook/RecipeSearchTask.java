@@ -29,13 +29,9 @@ public class RecipeSearchTask extends RestTask<List<Recipe>> {
         super(callback);
     }
 
-    public RecipeSearchTask(String domain,Callback<List<Recipe>> callback) {
-        super(domain,callback);
-    }
-
     @Override
     protected List<Recipe> doInBackground(String... params) {
-        HttpPost request = new HttpPost(domain+"/SmartCookBook/rest/ws/service1/");
+        HttpPost request = new HttpPost(getDomain()+"/SmartCookBook/rest/ws/service1/");
         try
         {
             ArrayList<NameValuePair> valpairs = new ArrayList<>();
@@ -58,11 +54,12 @@ public class RecipeSearchTask extends RestTask<List<Recipe>> {
                 instream.close();
                 return JsonRecipe.readCollection(response);
             }
+            System.err.print("no entity "+httpResponse.getStatusLine().getStatusCode());
             return null;
         }
         catch (Exception e)
         {
-            Log.e("REST", "search error",e);
+            e.printStackTrace();
             return null;
         }
     }

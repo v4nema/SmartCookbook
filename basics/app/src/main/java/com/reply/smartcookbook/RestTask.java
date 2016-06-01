@@ -11,17 +11,14 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 public abstract class RestTask<T>  extends AsyncTask<String, Void, T> {
-    protected String domain = "http://172.30.3.185:8080";
     private Callback<T> callback;
 
     public RestTask(Callback<T> callback) {
-        this(ApplicationState.getInstance().getServerAddress(), callback);
+        this.callback = callback;
     }
 
-    public RestTask(String domain,Callback<T> callback) {
-
-        this.domain = domain;
-        this.callback = callback;
+    protected String getDomain() {
+        return ApplicationState.getInstance().getServerAddress();
     }
 
     protected static String convertStreamToString(InputStream is)
