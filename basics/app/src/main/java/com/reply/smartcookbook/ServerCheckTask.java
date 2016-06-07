@@ -1,6 +1,5 @@
 package com.reply.smartcookbook;
 
-import com.allrecipes.Recipe;
 import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
 
 import org.apache.http.HttpEntity;
@@ -17,14 +16,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerCheckTask extends RestTask<Void> {
+public class ServerCheckTask extends RestTask<Void,Void> {
 
     public ServerCheckTask(Callback<Void> callback) {
         super(callback);
     }
 
     @Override
-    protected Void doInBackground(String... params) {
+    protected Void doInBackground(Void... params) {
         HttpGet request = new HttpGet(getDomain()+"/server");
         try
         {

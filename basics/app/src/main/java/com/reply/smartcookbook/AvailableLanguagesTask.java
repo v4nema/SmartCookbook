@@ -13,14 +13,14 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.util.Locale;
 
-public class AvailableLanguagesTask extends RestTask<String> {
+public class AvailableLanguagesTask extends RestTask<Void,String> {
 
     public AvailableLanguagesTask(Callback<String> callback) {
         super(callback);
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    protected String doInBackground(Void... params) {
         HttpGet request = new HttpGet(getDomain()+"/languages");
         try
         {

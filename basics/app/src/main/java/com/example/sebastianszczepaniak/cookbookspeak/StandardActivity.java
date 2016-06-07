@@ -18,11 +18,12 @@ import android.widget.TextView;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
 
-import com.allrecipes.Recipe;
 import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
 import com.reply.smartcookbook.Callback;
 import com.reply.smartcookbook.IngredientListTask;
 import com.reply.smartcookbook.RecipeSearchTask;
+
+import eu.reply.smartcookbook.recipe.Recipe;
 
 /**
  * Created by Tak on 24/04/2016.

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.allrecipes.Recipe;
 import com.example.sebastianszczepaniak.cookbookspeak.adapters.RecipeItemAdapter;
 import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
 

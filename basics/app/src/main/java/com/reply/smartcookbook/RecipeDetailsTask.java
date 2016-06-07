@@ -2,35 +2,27 @@ package com.reply.smartcookbook;
 
 import android.util.Log;
 
-import com.allrecipes.Recipe;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
-public class RecipeDetailsTask extends RestTask<Recipe> {
+import eu.reply.smartcookbook.recipe.Recipe;
+
+public class RecipeDetailsTask extends RestTask<Recipe,Recipe> {
 
     public RecipeDetailsTask(Callback<Recipe> callback) {
         super(callback);
     }
 
     @Override
-    protected Recipe doInBackground(String... params) {
-        HttpPost request = new HttpPost(getLangDomain()+"/get");
+    protected Recipe doInBackground(Recipe... params) {
+        HttpGet request = new HttpGet(getDomain()+"/get/"+params[0].getSource()+"/"+params[0].getId());
         try
         {
-            ArrayList<NameValuePair> valpairs = new ArrayList<>();
-            valpairs.add(new BasicNameValuePair("url",params[0]));
-            request.setEntity(new UrlEncodedFormEntity(valpairs));
             HttpClient client = new DefaultHttpClient();
 
             HttpResponse httpResponse = client.execute(request);

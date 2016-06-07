@@ -2,15 +2,15 @@ package com.reply.smartcookbook;
 
 import android.util.Log;
 
-import com.allrecipes.Ingredient;
-import com.allrecipes.Recipe;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import eu.reply.smartcookbook.recipe.Ingredient;
+import eu.reply.smartcookbook.recipe.Recipe;
 
 public class JsonRecipe {
 
@@ -28,17 +28,16 @@ public class JsonRecipe {
     }
 
     public static Recipe read(String json) {
-        return readCollection(json).get(0);
-        /*try {
-            return read(new JSONObject(json).getJSONObject("collection"));
+        try {
+            return read(new JSONObject(json));
         }catch(JSONException e) {
             Log.e("JsonRecipe", "error reading recipe", e);
             return null;
-        }*/
+        }
     }
 
     public static Recipe read(JSONObject jrep) throws JSONException {
-        Recipe recipe = new Recipe(jrep.getString("url"));
+        Recipe recipe = new Recipe(jrep.getString("source"),jrep.getString("id"));
         recipe.setName(jrep.getString("name"));
 
         JSONArray jings = jrep.getJSONArray("ingredients");

@@ -1,11 +1,11 @@
 package com.example.sebastianszczepaniak.cookbookspeak.models;
 
-import com.allrecipes.Ingredient;
-import com.allrecipes.Recipe;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import eu.reply.smartcookbook.recipe.Ingredient;
+import eu.reply.smartcookbook.recipe.Recipe;
 
 /**
  * Created by sebastianszczepaniak on 14/05/2016.
@@ -15,7 +15,8 @@ public class ApplicationState {
     private List<String> ingredients;
     private List<Recipe> recipes;
     private Recipe selectedRecipe;
-    private String serverAddress = "https://smart-cookbook.herokuapp.com";
+    //private String serverAddress = "https://smart-cookbook.herokuapp.com";
+    private String serverAddress = "http://10.0.53.30:4567";
     private String lang = "";
 
     private static ApplicationState ourInstance = new ApplicationState();

@@ -2,14 +2,10 @@ package com.example.sebastianszczepaniak.cookbookspeak;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.speech.tts.TextToSpeech;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.allrecipes.Recipe;
 import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
 import com.reply.smartcookbook.AvailableLanguagesTask;
 import com.reply.smartcookbook.Callback;
@@ -17,7 +13,8 @@ import com.reply.smartcookbook.RecipeSearchTask;
 import com.reply.smartcookbook.ServerCheckTask;
 
 import java.util.List;
-import java.util.Locale;
+
+import eu.reply.smartcookbook.recipe.Recipe;
 
 public class MainActivity extends Activity {
 

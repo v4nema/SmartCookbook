@@ -15,13 +15,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.allrecipes.Ingredient;
-import com.allrecipes.Recipe;
 import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import eu.reply.smartcookbook.recipe.Ingredient;
+import eu.reply.smartcookbook.recipe.Recipe;
 
 public class RecipeDescriptionActivity extends Activity implements TextToSpeech.OnInitListener {
 

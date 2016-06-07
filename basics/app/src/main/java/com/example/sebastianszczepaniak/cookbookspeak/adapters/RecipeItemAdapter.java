@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.allrecipes.Recipe;
 import com.example.sebastianszczepaniak.cookbookspeak.R;
 import com.example.sebastianszczepaniak.cookbookspeak.RecipeDescriptionActivity;
 import com.example.sebastianszczepaniak.cookbookspeak.RecipiesActivity;
@@ -18,6 +17,8 @@ import com.reply.smartcookbook.RecipeDetailsTask;
 import com.reply.smartcookbook.RecipeSearchTask;
 
 import java.util.List;
+
+import eu.reply.smartcookbook.recipe.Recipe;
 
 /**
  * Created by sebastianszczepaniak on 14/05/2016.
@@ -75,7 +76,7 @@ public class RecipeItemAdapter extends BaseAdapter {
                         context.startActivity(i);
                     }
                 });
-                task.execute(currentRecipe.getUrl());
+                task.execute(currentRecipe);
             }
         });
 

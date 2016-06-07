@@ -3,9 +3,6 @@ package com.reply.smartcookbook;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.allrecipes.Ingredient;
-import com.allrecipes.Recipe;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -23,7 +20,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeSearchTask extends RestTask<List<Recipe>> {
+import eu.reply.smartcookbook.recipe.Recipe;
+
+public class RecipeSearchTask extends RestTask<String,List<Recipe>> {
 
     public RecipeSearchTask(Callback<List<Recipe>> callback) {
         super(callback);

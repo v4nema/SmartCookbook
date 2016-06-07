@@ -15,14 +15,14 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-public class IngredientListTask extends RestTask<Set<String>> {
+public class IngredientListTask extends RestTask<Void,Set<String>> {
 
     public IngredientListTask(Callback<Set<String>> callback) {
         super(callback);
     }
 
     @Override
-    protected Set<String> doInBackground(String... params) {
+    protected Set<String> doInBackground(Void... params) {
         HttpGet request = new HttpGet(getLangDomain()+"/ingredients");
         try
         {
