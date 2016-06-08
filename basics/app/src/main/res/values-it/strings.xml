@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="what_in_fridge">Che c\'è nel frigo?</string>
+    <string name="audio_search_button">Dimmi i tuoi ingredienti</string>
+    <string name="search">cerca</string>
+    <string name="set_server">imposta</string>
+    <string name="pantry_button">Fammi controllare la dispensa</string>
+    <string name="ingredients">Ingredienti</string>
+    <string name="play_steps">Leggi</string>
+    <string name="recipe_steps">Metodo</string>
+    <string name="recipes_list">Lista delle ricette</string>
+    <string name="what_can_cook">Ecco cosa puoi cucinare</string>
+    <string name="next_step">Avanti</string>
+    <string name="finish_steps">Finito</string>
+    <string name="finish_step_message">Congratulazioni, hai finito di cucinare il tuo piatto. Buon appetito!</string>
+</resources>

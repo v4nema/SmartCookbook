@@ -120,12 +120,17 @@ public class RecipeDescriptionActivity extends Activity implements TextToSpeech.
                 speak(currentStepView.getText().toString(), TextToSpeech.QUEUE_FLUSH);
                 currentStep++;
                 if (currentStep == stepTextViews.size()) {
-                    nextButton.setEnabled(Boolean.FALSE);
-                    nextButton.setText("FINISHED");
-                    speak("Congratulations, you have finished cooking your dish. Enjoy your food!", TextToSpeech.QUEUE_ADD);
+                    finishReading();
                 }
             }
         });
+    }
+
+    private void finishReading() {
+        nextButton.setEnabled(Boolean.FALSE);
+        nextButton.setText(R.string.finish_steps);
+        nextButton.setBackgroundColor(Color.parseColor("#7fbf7f"));
+        speak(getResources().getString(R.string.finish_step_message), TextToSpeech.QUEUE_ADD);
     }
 
     private String prepareIngredientsString(List<Ingredient> ingredients) {
@@ -162,7 +167,9 @@ public class RecipeDescriptionActivity extends Activity implements TextToSpeech.
     @Override
     public void onInit(int status) {
         if (status == TextToSpeech.SUCCESS) {
-            if (tts.isLanguageAvailable(Locale.ENGLISH) == TextToSpeech.LANG_AVAILABLE) {
+            if (ApplicationState.getInstance().getLanguage().equals("en")
+                    && tts.isLanguageAvailable(Locale.ENGLISH) == TextToSpeech.LANG_AVAILABLE)
+            {
                 tts.setLanguage(Locale.ENGLISH);
             }
 
@@ -289,14 +296,10 @@ public class RecipeDescriptionActivity extends Activity implements TextToSpeech.
                     final TextView previousStepView = stepTextViews.get(currentStep - 1);
                     previousStepView.setBackground(null);
                     if (currentStep == stepTextViews.size()) {
-                        nextButton.setEnabled(Boolean.FALSE);
-                        nextButton.setText("FINISHED");
-                        nextButton.setBackgroundColor(Color.parseColor("#7fbf7f"));
-
                         mIsListening = false;
                         sr.stopListening();
 
-                        speak("Congratulations, you have finished cooking your dish. Enjoy your food!", TextToSpeech.QUEUE_ADD);
+                        finishReading();
                     } else {
                         final TextView currentStepView = stepTextViews.get(currentStep);
                         currentStepView.setBackgroundColor(Color.parseColor("#7fbf7f"));

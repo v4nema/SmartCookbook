@@ -40,7 +40,7 @@
             android:layout_alignParentRight="true"
             android:onClick="setContentView"
             android:layout_marginTop="20dp"
-            android:text="search"
+            android:text="@string/search"
             android:layout_gravity="center_horizontal" />
 
     </LinearLayout>

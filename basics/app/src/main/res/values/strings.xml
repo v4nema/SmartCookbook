@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">Smart Cookbook</string>
+    <string name="app_name" translatable="false">Smart Cookbook</string>
+    <string name="what_in_fridge">What\'s in your fridge?</string>
+    <string name="audio_search_button">Tell me your ingredients</string>
+    <string name="pantry_button">Let me check the pantry</string>
+    <string name="search">search</string>
+    <string name="set_server">set</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="recipe_steps">Method</string>
+    <string name="play_steps">Play</string>
+    <string name="recipes_list">Recipes List</string>
+    <string name="what_can_cook">Here\'s what you can cook...</string>
+    <string name="next_step">Next</string>
+    <string name="finish_steps">Finish</string>
+    <string name="finish_step_message">"Congratulations, you have finished cooking your dish. Enjoy your food!"</string>
 </resources>

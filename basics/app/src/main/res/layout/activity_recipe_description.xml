@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Ingredients"
+            android:text="@string/ingredients"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Method"
+            android:text="@string/recipe_steps"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -78,13 +78,13 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Play"
+                android:text="@string/play_steps"
                 android:id="@+id/play_button"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next"
+                android:text="@string/next_step"
                 android:id="@+id/next_button"
                 android:visibility="invisible"/>
 
