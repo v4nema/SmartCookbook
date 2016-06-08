@@ -15,8 +15,7 @@ public class ApplicationState {
     private List<String> ingredients;
     private List<Recipe> recipes;
     private Recipe selectedRecipe;
-    //private String serverAddress = "https://smart-cookbook.herokuapp.com";
-    private String serverAddress = "http://10.0.53.30:4567";
+    private String serverAddress = "https://smart-cookbook.herokuapp.com";
     private String lang = "";
 
     private static ApplicationState ourInstance = new ApplicationState();
