@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
+import android.widget.Toast;
 
 import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
 import com.reply.smartcookbook.Callback;
@@ -57,6 +58,8 @@ public class StandardActivity extends Activity implements OnClickListener
         new IngredientListTask(new Callback<Set<String>>() {
             @Override
             public void callback(Set<String> value) {
+                if (value == null)
+                    return;
                 ingredients = new ArrayList<>(value.size());
                 for (String ingr : value) {
                     ingredients.add(" "+ingr);
@@ -87,6 +90,10 @@ public class StandardActivity extends Activity implements OnClickListener
                     @Override
                     public void callback(List<Recipe> value)
                     {
+                        if (value == null) {
+                            Toast.makeText(StandardActivity.this, R.string.error_search, Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         ApplicationState.getInstance().setRecipes(value);
                         Intent intent = new Intent(StandardActivity.this, RecipiesActivity.class);
                         startActivity(intent);

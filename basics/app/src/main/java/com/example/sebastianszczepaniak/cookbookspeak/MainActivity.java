@@ -2,9 +2,11 @@ package com.example.sebastianszczepaniak.cookbookspeak;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
 import com.reply.smartcookbook.AvailableLanguagesTask;
@@ -17,19 +19,42 @@ import java.util.List;
 import eu.reply.smartcookbook.recipe.Recipe;
 
 public class MainActivity extends Activity {
+    private static final String SERVER_ADDRESS = "server.address";
+    private static final String SERVER_LANG = "server.language";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new ServerCheckTask(new Callback<Void>() {
-            @Override
-            public void callback(Void value) {
-                if (ApplicationState.getInstance().getLanguage().isEmpty())
-                    new AvailableLanguagesTask(null).execute();
-            }
-        }).execute();
+        final SharedPreferences pref = getPreferences(MODE_PRIVATE);
+        final ApplicationState state = ApplicationState.getInstance();
+        state.setServerAddress(pref.getString(SERVER_ADDRESS,null));
+        state.setLanguage(pref.getString(SERVER_LANG,""));
+
+        if (!state.isServerChecked()) {
+            new ServerCheckTask(new Callback<String>() {
+                @Override
+                public void callback(String value) {
+                    state.setServerChecked();
+                    final SharedPreferences.Editor editor = pref.edit();
+                    if (value != null) {
+                        editor.putString(SERVER_ADDRESS, value);
+                        editor.commit();
+                    }
+
+                    if (state.getLanguage().isEmpty()) {
+                        new AvailableLanguagesTask(new Callback<String>() {
+                            @Override
+                            public void callback(String lang) {
+                                editor.putString(SERVER_LANG, lang);
+                                editor.commit();
+                            }
+                        }).execute();
+                    }
+                }
+            }).execute();
+        }
 
         final EditText ingredientsBox = (EditText) findViewById(R.id.ingredientsBox);
         ingredientsBox.setText("");
@@ -42,7 +67,11 @@ public class MainActivity extends Activity {
                     @Override
                     public void callback(List<Recipe> value)
                     {
-                        ApplicationState.getInstance().setRecipes(value);
+                        if (value == null) {
+                            Toast.makeText(MainActivity.this, R.string.error_search, Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        state.setRecipes(value);
                         Intent intent = new Intent(MainActivity.this, RecipiesActivity.class);
                         startActivity(intent);
                     }
@@ -57,7 +86,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
 
                 StringBuilder stringBuilder = new StringBuilder();
-                for (String s : ApplicationState.getInstance().getIngredients()) {
+                for (String s : state.getIngredients()) {
                     stringBuilder.append(s).append(" ");
                 }
 
@@ -72,7 +101,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 String address = serverAddress.getText().toString();
-                ApplicationState.getInstance().setServerAddress(address);
+                state.setServerAddress(address);
             }
         });
 

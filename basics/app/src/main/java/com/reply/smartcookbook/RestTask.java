@@ -7,6 +7,7 @@ import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 
 public abstract class RestTask<I,T>  extends AsyncTask<I, Void, T> {
     private Callback<T> callback;
@@ -33,14 +34,14 @@ public abstract class RestTask<I,T>  extends AsyncTask<I, Void, T> {
 
     protected static String convertStreamToString(InputStream is)
     {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        Reader reader = new InputStreamReader(is);
         StringBuilder sb = new StringBuilder();
-        String line;
         try
         {
-            while ((line = reader.readLine()) != null)
-            {
-                sb.append(line).append("\n");
+            char[] buffer = new char[4096];
+            int n;
+            while ((n = reader.read(buffer)) > 0) {
+                sb.append(buffer, 0, n);
             }
             is.close();
         }

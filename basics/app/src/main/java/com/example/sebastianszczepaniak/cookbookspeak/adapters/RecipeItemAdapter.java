@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sebastianszczepaniak.cookbookspeak.R;
 import com.example.sebastianszczepaniak.cookbookspeak.RecipeDescriptionActivity;
@@ -71,6 +72,10 @@ public class RecipeItemAdapter extends BaseAdapter {
                     @Override
                     public void callback(Recipe value)
                     {
+                        if (value == null) {
+                            Toast.makeText(context, R.string.error_details, Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         ApplicationState.getInstance().setSelectedRecipe(value);
                         Intent i = new Intent(context.getApplicationContext(), RecipeDescriptionActivity.class);
                         context.startActivity(i);

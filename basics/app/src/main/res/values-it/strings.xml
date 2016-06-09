@@ -13,4 +13,6 @@
     <string name="next_step">Avanti</string>
     <string name="finish_steps">Finito</string>
     <string name="finish_step_message">Congratulazioni, hai finito di cucinare il tuo piatto. Buon appetito!</string>
+    <string name="error_details">Errore durante il caricamento dei dettagli</string>
+    <string name="error_search">Errore durante la ricerca</string>
 </resources>

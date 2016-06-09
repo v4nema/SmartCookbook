@@ -16,14 +16,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerCheckTask extends RestTask<Void,Void> {
+public class ServerCheckTask extends RestTask<Void,String> {
 
-    public ServerCheckTask(Callback<Void> callback) {
+    public ServerCheckTask(Callback<String> callback) {
         super(callback);
     }
 
     @Override
-    protected Void doInBackground(Void... params) {
+    protected String doInBackground(Void... params) {
         HttpGet request = new HttpGet(getDomain()+"/server");
         try
         {
@@ -40,6 +40,7 @@ public class ServerCheckTask extends RestTask<Void,Void> {
                     String response = convertStreamToString(instream);
                     instream.close();
                     ApplicationState.getInstance().setServerAddress(response);
+                    return response;
                 }
             }
             return null;

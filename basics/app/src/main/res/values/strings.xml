@@ -13,4 +13,6 @@
     <string name="next_step">Next</string>
     <string name="finish_steps">Finish</string>
     <string name="finish_step_message">"Congratulations, you have finished cooking your dish. Enjoy your food!"</string>
+    <string name="error_search">Error while searching recipes</string>
+    <string name="error_details">Error while retrieving recipe details</string>
 </resources>

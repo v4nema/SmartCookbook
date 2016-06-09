@@ -17,6 +17,7 @@ public class ApplicationState {
     private Recipe selectedRecipe;
     private String serverAddress = "https://smart-cookbook.herokuapp.com";
     private String lang = "";
+    private boolean serverCheck = false;
 
     private static ApplicationState ourInstance = new ApplicationState();
 
@@ -25,7 +26,16 @@ public class ApplicationState {
     }
 
     public void setServerAddress(String serverAddress) {
-        this.serverAddress = serverAddress;
+        if (serverAddress != null)
+            this.serverAddress = serverAddress;
+    }
+
+    public boolean isServerChecked() {
+        return serverCheck;
+    }
+
+    public void setServerChecked() {
+        serverCheck = true;
     }
 
     public static ApplicationState getInstance() {
