@@ -2,11 +2,13 @@ package com.example.sebastianszczepaniak.cookbookspeak;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
@@ -20,6 +22,7 @@ import android.speech.SpeechRecognizer;
 import android.widget.Toast;
 
 import com.example.sebastianszczepaniak.cookbookspeak.models.ApplicationState;
+import com.example.sebastianszczepaniak.cookbookspeak.models.IngredientList;
 import com.reply.smartcookbook.Callback;
 import com.reply.smartcookbook.IngredientListTask;
 import com.reply.smartcookbook.RecipeSearchTask;
@@ -33,6 +36,9 @@ import eu.reply.smartcookbook.recipe.Recipe;
 public class StandardActivity extends Activity implements OnClickListener
 {
     private static final String TAG = "StandardActivity";
+    private static final String INGREDIENTS = "ingredients";
+    private static final String INGREDIENTS_DATE = "ingredients.date";
+
     protected static final int REQUEST_OK = 1;
 
     private SpeechRecognizer sr = null;
@@ -55,17 +61,30 @@ public class StandardActivity extends Activity implements OnClickListener
         mText = (TextView) findViewById(R.id.outpuText);
         mStatusText = (TextView) findViewById(R.id.statusText);
 
-        new IngredientListTask(new Callback<Set<String>>() {
+        final SharedPreferences pref = getPreferences(MODE_PRIVATE);
+        Set<String> prefInrg = pref.getStringSet(INGREDIENTS, null);
+
+        if (prefInrg != null)
+            ingredients = prefInrg;
+
+        new IngredientListTask(new Callback<IngredientList>() {
             @Override
-            public void callback(Set<String> value) {
+            public void callback(IngredientList value) {
                 if (value == null)
                     return;
-                ingredients = new ArrayList<>(value.size());
-                for (String ingr : value) {
-                    ingredients.add(" "+ingr);
+
+                Set<String> ingrs = new HashSet<>(value.getIngredients().size());
+                for (String ingr : value.getIngredients()) {
+                    ingrs.add(" " + ingr);
                 }
+                ingredients = ingrs;
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putStringSet(INGREDIENTS, ingrs);
+                if (value.getLastUpdate() != null)
+                    editor.putString(INGREDIENTS_DATE, value.getLastUpdate());
+                editor.commit();
             }
-        }).execute();
+        }).execute(pref.getString(INGREDIENTS_DATE, null));
 
         sr = SpeechRecognizer.createSpeechRecognizer(this);
         sr.setRecognitionListener(new listener());
