@@ -82,7 +82,7 @@ public class StandardActivity extends Activity implements OnClickListener
                 editor.putStringSet(INGREDIENTS, ingrs);
                 if (value.getLastUpdate() != null)
                     editor.putString(INGREDIENTS_DATE, value.getLastUpdate());
-                editor.commit();
+                editor.apply();
             }
         }).execute(pref.getString(INGREDIENTS_DATE, null));
 
@@ -236,6 +236,7 @@ public class StandardActivity extends Activity implements OnClickListener
                 Log.d(TAG, " thingsYouSaid.size=" +  thingsYouSaid.size());
 
                 String outValue = "";
+                Set<String> found = new HashSet<>();
 
                 for (int i = 0; outValue.isEmpty() && i < thingsYouSaid.size(); i++)
                 {
@@ -246,10 +247,14 @@ public class StandardActivity extends Activity implements OnClickListener
                     else {
                         for (String s : ingredients) {
                             int idx = wordsToProcess.indexOf(s);
-                            if (idx > 0) {
+                            if (idx >= 0) {
                                 int end = wordsToProcess.indexOf(' ',idx+1);
                                 if (end < 0) end = wordsToProcess.length();
-                                outValue += wordsToProcess.substring(idx+1, end) + " ";
+                                String word = wordsToProcess.substring(idx+1, end);
+                                if (!found.contains(word)) {
+                                    found.add(word);
+                                    outValue += word + " ";
+                                }
                             }
                         }
                     }
