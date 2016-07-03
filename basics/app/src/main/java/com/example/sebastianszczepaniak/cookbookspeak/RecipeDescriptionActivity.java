@@ -161,7 +161,7 @@ public class RecipeDescriptionActivity extends Activity implements TextToSpeech.
     }
 
     private void speak(String words, int action) {
-        tts.speak(words, action, null, null);
+        tts.speak(words, action, null);
     }
 
     @Override
@@ -286,13 +286,15 @@ public class RecipeDescriptionActivity extends Activity implements TextToSpeech.
 
                 String outValue = "";
 
-                for (int i = 0; i < 1; /*thingsYouSaid.size();*/ i++)
-                    outValue += thingsYouSaid.get(i); // + "\n";
+                for (int i = 0; i < thingsYouSaid.size(); i++) {
+                    if (thingsYouSaid.get(i).toString().length() < 10)
+                        outValue += thingsYouSaid.get(i); // + "\n";
+                }
 
 //                mText.setText(mText.getText().toString()+outValue+" ");
                 System.out.println(outValue);
 
-                if (outValue.length() < 10 && outValue.contains("next")) {
+                if (outValue.toLowerCase().contains("next")) {
                     final TextView previousStepView = stepTextViews.get(currentStep - 1);
                     previousStepView.setBackground(null);
                     if (currentStep == stepTextViews.size()) {

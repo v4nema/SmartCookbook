@@ -58,13 +58,23 @@ public class ApplicationState {
 
         if(ingredients == null || !ingredients.isEmpty()) return;
 
-        ingredients.add("milk");
-        ingredients.add("sausages");
-        ingredients.add("cheese");
-        ingredients.add("beef");
-        ingredients.add("carrots");
-        ingredients.add("pasta");
-        ingredients.add("eggs");
+        if ("it".equals(getLanguage())) {
+            ingredients.add("latte");
+            ingredients.add("salsicce");
+            ingredients.add("fomaggio");
+            ingredients.add("manzo");
+            ingredients.add("carote");
+            ingredients.add("pasta");
+            ingredients.add("uova");
+        } else {
+            ingredients.add("milk");
+            ingredients.add("sausages");
+            ingredients.add("cheese");
+            ingredients.add("beef");
+            ingredients.add("carrots");
+            ingredients.add("pasta");
+            ingredients.add("eggs");
+        }
     }
 
     public List<String> getIngredients() {
