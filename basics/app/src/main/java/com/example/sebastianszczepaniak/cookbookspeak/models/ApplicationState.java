@@ -61,7 +61,7 @@ public class ApplicationState {
         if ("it".equals(getLanguage())) {
             ingredients.add("latte");
             ingredients.add("salsicce");
-            ingredients.add("fomaggio");
+            ingredients.add("formaggio");
             ingredients.add("manzo");
             ingredients.add("carote");
             ingredients.add("pasta");
